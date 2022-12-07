@@ -120,18 +120,22 @@ class MypageFragment : Fragment() {
             val shared = requireActivity().getSharedPreferences("keyword", Context.MODE_PRIVATE)
             val key = shared.getBoolean("isKeyword",true)
 
-            if(key)
+            if(key){
+                Log.d("keyword","true")
                 binding.keywordToggleBtn.isChecked = true
-            else
+            }else if(!key){
+                Log.d("keyword","false")
                 binding.keywordToggleBtn.isChecked = false
+            }
+
 
             binding.keywordToggleBtn.setOnClickListener {
                 prefs = requireActivity().getSharedPreferences("keyword", Context.MODE_PRIVATE)
                 val editor = prefs.edit()
-                if(binding.keywordToggleBtn.text == "ON"){
+                if(binding.keywordToggleBtn.isChecked){
                     editor.putBoolean("isKeyword",true);
                     editor.apply()
-                }else if(binding.keywordToggleBtn.text == "OFF"){
+                }else if(!binding.keywordToggleBtn.isChecked){
                     editor.putBoolean("isKeyword", false);
                     editor.apply()
                 }
