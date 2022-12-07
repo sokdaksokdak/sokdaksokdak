@@ -38,9 +38,6 @@ class WriteDiary(application: Application) {
     }
     public fun insertDiary(){
         repository.insertData("키워드를 선택하세요.", "일기를 작성하세요.")
-        // DataBase 에 keyword 혹은 content update
-        //db.diaryDao().insertDiaryData(this.keyword, this.content)
-        //println("success insert")
     }
 
     // TODO: 일기 작성 완료했을 때 update 하는 함수
