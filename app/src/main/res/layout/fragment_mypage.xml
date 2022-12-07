@@ -61,6 +61,7 @@
                 android:textSize="20dp" />
 
 
+
         </LinearLayout>
 
         <LinearLayout
@@ -81,6 +82,7 @@
                 android:text="키워드 영구 추천"
                 android:textColor="@color/pola_day_gray"
                 android:textSize="18dp" />
+
 
             <Switch
                 android:id="@+id/keywordToggleBtn"
