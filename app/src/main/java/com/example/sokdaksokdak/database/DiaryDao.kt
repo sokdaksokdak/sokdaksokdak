@@ -8,6 +8,7 @@ import java.util.*
 
 @Dao
 interface DiaryDao {
+    //일기의 내용과 관련한 DB
     @Query("SELECT * FROM diary_table")
     fun getAll(): List<Diary>
 
@@ -23,16 +24,13 @@ interface DiaryDao {
     @Query("SELECT date FROM diary_table")
     fun getDate(): List<Int>
 
-//    @Query("select diary_context from diary_table where date=date")
-//    //@Query("select * from diary_table where date=:date")
-//    fun getDateData(date:Int)
-
+    //날짜별 키워드 가져오기
     @Query("select keyword from diary_table where date=:date")
     fun getDateKeyword(date:String): String
-
+    //날짜별 데이터 존재하는지 가져오기
     @Query("select exists (select keyword from diary_table where date=:date)")
     fun isDateDataExist(date:String): Boolean
-
+    //날짜별 일기 가져오기
     @Query("select diary_context from diary_table where date=:date")
     //@Query("select * from diary_table where date=:date")
     fun getDateContent(date:String):String

@@ -23,6 +23,7 @@ import kotlin.collections.ArrayList
 
 
 
+// DiaryFragment에서 캘린더 다이얼로그를 띄우기 위한 Fragment
 class CalendarFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private val calendar = Calendar.getInstance()
@@ -45,6 +46,8 @@ class CalendarFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth)
+        //DatePicker를 통해 사용자로부터 날짜를 받아오고 해당 날짜로 redirect
+        //Fragment로 해당 정보를 넘겨주기 위한 setFragmentResult 사용
 
         val selectedDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
         val selectedDateBundle = Bundle()
