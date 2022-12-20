@@ -7,8 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="pola_gray">#8C8C8C</color>
+    <color name="pola_primary">#8C8C8C</color>
     <color name="pola_white">#F4F4F4</color>
-    <color name="pola_navi">#E0E0E0</color>
+    <color name="pola_navi">#B8B8B8</color>
     <color name="pola_day_gray">#656565</color>
+
+    <color name="daygray">#EAEAEA</color>
+    <color name="green">#87C18D</color>
+    <color name="green_light">#CBE2A4</color>
+    <color name="clover_navi">#CDDFC4</color>
+
+
 </resources>

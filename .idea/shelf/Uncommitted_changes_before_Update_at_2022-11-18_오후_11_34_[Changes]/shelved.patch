@@ -1,0 +1,743 @@
+Index: app/src/main/java/com/example/sokdaksokdak/ThemeChangeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.sokdaksokdak\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\n\r\n// TODO: Rename parameter arguments, choose names that match\r\n// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\n/**\r\n * A simple [Fragment] subclass.\r\n * Use the [ThemeChangeFragment.newInstance] factory method to\r\n * create an instance of this fragment.\r\n */\r\nclass ThemeChangeFragment : Fragment() {\r\n    // TODO: Rename and change types of parameters\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_theme_change, container, false)\r\n    }\r\n\r\n    companion object {\r\n        /**\r\n         * Use this factory method to create a new instance of\r\n         * this fragment using the provided parameters.\r\n         *\r\n         * @param param1 Parameter 1.\r\n         * @param param2 Parameter 2.\r\n         * @return A new instance of fragment ThemeChangeFragment.\r\n         */\r\n        // TODO: Rename and change types and number of parameters\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            ThemeChangeFragment().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/sokdaksokdak/ThemeChangeFragment.kt b/app/src/main/java/com/example/sokdaksokdak/ThemeChangeFragment.kt
+--- a/app/src/main/java/com/example/sokdaksokdak/ThemeChangeFragment.kt	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/java/com/example/sokdaksokdak/ThemeChangeFragment.kt	(date 1668700037868)
+@@ -1,59 +1,68 @@
+ package com.example.sokdaksokdak
+ 
++import android.content.Intent
+ import android.os.Bundle
+-import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.fragment.app.Fragment
++import com.example.sokdaksokdak.Factory.CloverThemeFactory
++import com.example.sokdaksokdak.Factory.PolaThemeFactory
++import com.example.sokdaksokdak.databinding.FragmentCalendarBinding
++import com.example.sokdaksokdak.databinding.FragmentCalendarCloverBinding
++import com.example.sokdaksokdak.databinding.FragmentThemeChangeBinding
+ 
+-// TODO: Rename parameter arguments, choose names that match
+-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
+ 
+-/**
+- * A simple [Fragment] subclass.
+- * Use the [ThemeChangeFragment.newInstance] factory method to
+- * create an instance of this fragment.
+- */
+ class ThemeChangeFragment : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
++
++
++    private lateinit var binding  : FragmentThemeChangeBinding
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
++
+         super.onCreate(savedInstanceState)
+-        arguments?.let {
+-            param1 = it.getString(ARG_PARAM1)
+-            param2 = it.getString(ARG_PARAM2)
+-        }
++//        if(savedInstanceState!=null){
++//            var radioIndex = savedInstanceState.getInt("radioIndex")
++//        }
+     }
++
++
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+     ): View? {
+-        // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_theme_change, container, false)
++        binding = FragmentThemeChangeBinding.inflate(layoutInflater)
++//        binding.polaThemeRadioBtn.isChecked = true
++        return binding.root
+     }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++        // 여기가 client???
++
++        binding.themeRadioGrp.setOnCheckedChangeListener { radioGroup, i ->
++            when(i){
++                R.id.pola_theme_radioBtn->{
++                    val activity = activity as PolaNaviActivity
++
++                    val cloverDiary = CloverThemeFactory().createDiary()
++                    val cloverCalendar = CloverThemeFactory().createCalendar()
++                    activity.receiveData(cloverDiary,cloverCalendar,1)
++                }
++                R.id.clover_theme_radioBtn->{
++                    val activity = activity as PolaNaviActivity
+ 
+-    companion object {
+-        /**
+-         * Use this factory method to create a new instance of
+-         * this fragment using the provided parameters.
+-         *
+-         * @param param1 Parameter 1.
+-         * @param param2 Parameter 2.
+-         * @return A new instance of fragment ThemeChangeFragment.
+-         */
+-        // TODO: Rename and change types and number of parameters
+-        @JvmStatic
+-        fun newInstance(param1: String, param2: String) =
+-            ThemeChangeFragment().apply {
+-                arguments = Bundle().apply {
+-                    putString(ARG_PARAM1, param1)
+-                    putString(ARG_PARAM2, param2)
++                    val polaDiary = PolaThemeFactory().createDiary()
++                    val polaCalendar = PolaThemeFactory().createCalendar()
++                    activity.receiveData(polaDiary,polaCalendar,2)
+                 }
+             }
++        }
+     }
+-}
+\ No newline at end of file
++
++}
++
++
++
+Index: app/src/main/java/com/example/sokdaksokdak/CalendarFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.sokdaksokdak\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\n\r\n// TODO: Rename parameter arguments, choose names that match\r\n// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\n/**\r\n * A simple [Fragment] subclass.\r\n * Use the [CalendarFragment.newInstance] factory method to\r\n * create an instance of this fragment.\r\n */\r\nclass CalendarFragment : Fragment() {\r\n    // TODO: Rename and change types of parameters\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_calendar, container, false)\r\n    }\r\n\r\n    companion object {\r\n        /**\r\n         * Use this factory method to create a new instance of\r\n         * this fragment using the provided parameters.\r\n         *\r\n         * @param param1 Parameter 1.\r\n         * @param param2 Parameter 2.\r\n         * @return A new instance of fragment CalendarFragment.\r\n         */\r\n        // TODO: Rename and change types and number of parameters\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            CalendarFragment().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/sokdaksokdak/CalendarFragment.kt b/app/src/main/java/com/example/sokdaksokdak/CalendarFragment.kt
+--- a/app/src/main/java/com/example/sokdaksokdak/CalendarFragment.kt	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/java/com/example/sokdaksokdak/CalendarFragment.kt	(date 1668699703067)
+@@ -5,55 +5,48 @@
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import com.example.sokdaksokdak.databinding.FragmentCalendarBinding
++import com.example.sokdaksokdak.databinding.FragmentCalendarCloverBinding
++import com.example.sokdaksokdak.databinding.FragmentDiaryBinding
++import com.example.sokdaksokdak.databinding.FragmentDiaryCloverBinding
+ 
+-// TODO: Rename parameter arguments, choose names that match
+-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
+ 
+-/**
+- * A simple [Fragment] subclass.
+- * Use the [CalendarFragment.newInstance] factory method to
+- * create an instance of this fragment.
+- */
+-class CalendarFragment : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
++class CalendarFragment(themeType:Int) : Fragment() {
+ 
++    var themeType=themeType
++    private var polaBinding : FragmentCalendarBinding?= null
++    private var cloverBinding : FragmentCalendarCloverBinding?= null
++    companion object {
++        fun newInstance(theme:Int): CalendarFragment{
++            val fragment = CalendarFragment(theme)
++            return fragment
++        }
++
++    }
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        arguments?.let {
+-            param1 = it.getString(ARG_PARAM1)
+-            param2 = it.getString(ARG_PARAM2)
+-        }
++
+     }
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+     ): View? {
+-        // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_calendar, container, false)
+-    }
++        println("##### 테마 ######:"+themeType)
+ 
+-    companion object {
+-        /**
+-         * Use this factory method to create a new instance of
+-         * this fragment using the provided parameters.
+-         *
+-         * @param param1 Parameter 1.
+-         * @param param2 Parameter 2.
+-         * @return A new instance of fragment CalendarFragment.
+-         */
+-        // TODO: Rename and change types and number of parameters
+-        @JvmStatic
+-        fun newInstance(param1: String, param2: String) =
+-            CalendarFragment().apply {
+-                arguments = Bundle().apply {
+-                    putString(ARG_PARAM1, param1)
+-                    putString(ARG_PARAM2, param2)
+-                }
+-            }
++        polaBinding =  FragmentCalendarBinding.inflate(layoutInflater)
++        cloverBinding =  FragmentCalendarCloverBinding.inflate(layoutInflater)
++        if(themeType==1){
++            return polaBinding!!.root
++        }
++        else{
++            return cloverBinding!!.root
++        }
+     }
++
++    override fun onDestroyView() {
++        polaBinding = null
++        cloverBinding = null
++        super.onDestroyView()
++    }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/sokdaksokdak/DiaryFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.sokdaksokdak\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\n\r\n// TODO: Rename parameter arguments, choose names that match\r\n// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\n/**\r\n * A simple [Fragment] subclass.\r\n * Use the [DiaryFragment.newInstance] factory method to\r\n * create an instance of this fragment.\r\n */\r\nclass DiaryFragment : Fragment() {\r\n    // TODO: Rename and change types of parameters\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_diary, container, false)\r\n    }\r\n\r\n    companion object {\r\n        /**\r\n         * Use this factory method to create a new instance of\r\n         * this fragment using the provided parameters.\r\n         *\r\n         * @param param1 Parameter 1.\r\n         * @param param2 Parameter 2.\r\n         * @return A new instance of fragment DiaryFragment.\r\n         */\r\n        // TODO: Rename and change types and number of parameters\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            DiaryFragment().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/sokdaksokdak/DiaryFragment.kt b/app/src/main/java/com/example/sokdaksokdak/DiaryFragment.kt
+--- a/app/src/main/java/com/example/sokdaksokdak/DiaryFragment.kt	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/java/com/example/sokdaksokdak/DiaryFragment.kt	(date 1668700941027)
+@@ -1,59 +1,57 @@
+ package com.example.sokdaksokdak
+ 
+ import android.os.Bundle
++import android.provider.Contacts.SettingsColumns.KEY
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import com.example.sokdaksokdak.databinding.FragmentDiaryBinding
++import com.example.sokdaksokdak.databinding.FragmentDiaryCloverBinding
++import kotlin.properties.Delegates
++
++class DiaryFragment(themeType:Int) : Fragment() {
+ 
+-// TODO: Rename parameter arguments, choose names that match
+-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
++    var themeType=themeType
+ 
+-/**
+- * A simple [Fragment] subclass.
+- * Use the [DiaryFragment.newInstance] factory method to
+- * create an instance of this fragment.
+- */
+-class DiaryFragment : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
++//    private var polaBinding : FragmentDiaryBinding ?= null
++//    private var cloverBinding : FragmentDiaryCloverBinding ?= null
++
++
++    companion object{
++        fun newInstance(theme:Int): DiaryFragment{
++            val fragment = DiaryFragment(theme)
++            return fragment
++        }
++    }
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        arguments?.let {
+-            param1 = it.getString(ARG_PARAM1)
+-            param2 = it.getString(ARG_PARAM2)
+-        }
++
+     }
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+     ): View? {
+-        // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_diary, container, false)
+-    }
++        println("##### 테마 ######:"+themeType)
++
++        if(themeType==1){
++            var binding =  FragmentDiaryBinding.inflate(layoutInflater)
++            return binding!!.root
++        }
++        else{
++            var binding =  FragmentDiaryCloverBinding.inflate(layoutInflater)
++            return binding!!.root
++        }
+ 
+-    companion object {
+-        /**
+-         * Use this factory method to create a new instance of
+-         * this fragment using the provided parameters.
+-         *
+-         * @param param1 Parameter 1.
+-         * @param param2 Parameter 2.
+-         * @return A new instance of fragment DiaryFragment.
+-         */
+-        // TODO: Rename and change types and number of parameters
+-        @JvmStatic
+-        fun newInstance(param1: String, param2: String) =
+-            DiaryFragment().apply {
+-                arguments = Bundle().apply {
+-                    putString(ARG_PARAM1, param1)
+-                    putString(ARG_PARAM2, param2)
+-                }
+-            }
++    }
++
++
++    override fun onDestroyView() {
++//        polaBinding = null
++//        cloverBinding = null
++
++        super.onDestroyView()
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/sokdaksokdak/MypageFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.sokdaksokdak\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\n\r\n// TODO: Rename parameter arguments, choose names that match\r\n// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\n/**\r\n * A simple [Fragment] subclass.\r\n * Use the [MypageFragment.newInstance] factory method to\r\n * create an instance of this fragment.\r\n */\r\nclass MypageFragment : Fragment() {\r\n    // TODO: Rename and change types of parameters\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_mypage, container, false)\r\n    }\r\n\r\n    companion object {\r\n        /**\r\n         * Use this factory method to create a new instance of\r\n         * this fragment using the provided parameters.\r\n         *\r\n         * @param param1 Parameter 1.\r\n         * @param param2 Parameter 2.\r\n         * @return A new instance of fragment MypageFragment.\r\n         */\r\n        // TODO: Rename and change types and number of parameters\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            MypageFragment().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/sokdaksokdak/MypageFragment.kt b/app/src/main/java/com/example/sokdaksokdak/MypageFragment.kt
+--- a/app/src/main/java/com/example/sokdaksokdak/MypageFragment.kt	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/java/com/example/sokdaksokdak/MypageFragment.kt	(date 1668700037931)
+@@ -6,54 +6,23 @@
+ import android.view.View
+ import android.view.ViewGroup
+ 
+-// TODO: Rename parameter arguments, choose names that match
+-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
+ 
+-/**
+- * A simple [Fragment] subclass.
+- * Use the [MypageFragment.newInstance] factory method to
+- * create an instance of this fragment.
+- */
+ class MypageFragment : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        arguments?.let {
+-            param1 = it.getString(ARG_PARAM1)
+-            param2 = it.getString(ARG_PARAM2)
+-        }
++
+     }
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+     ): View? {
+-        // Inflate the layout for this fragment
++
+         return inflater.inflate(R.layout.fragment_mypage, container, false)
+     }
+ 
+     companion object {
+-        /**
+-         * Use this factory method to create a new instance of
+-         * this fragment using the provided parameters.
+-         *
+-         * @param param1 Parameter 1.
+-         * @param param2 Parameter 2.
+-         * @return A new instance of fragment MypageFragment.
+-         */
+-        // TODO: Rename and change types and number of parameters
+-        @JvmStatic
+-        fun newInstance(param1: String, param2: String) =
+-            MypageFragment().apply {
+-                arguments = Bundle().apply {
+-                    putString(ARG_PARAM1, param1)
+-                    putString(ARG_PARAM2, param2)
+-                }
+-            }
++
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/sokdaksokdak/PolaNaviActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.sokdaksokdak\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.FragmentManager\r\nimport com.example.sokdaksokdak.databinding.ActivityPolaNaviBinding\r\n\r\nprivate const val TAG_KEYWORD = \"keyword_fragment\"\r\nprivate const val TAG_CALENDAR =\"calender_fragment\"\r\nprivate const val TAG_DIARY = \"diary_fragment\"\r\nprivate const val TAG_LOGIN = \"login_fragment\"\r\nprivate const val TAG_MY_PAGE = \"mypage_fragment\"\r\nprivate const val TAG_THEME = \"theme_change_fragment\"\r\n\r\nclass PolaNaviActivity : AppCompatActivity() {\r\n    private lateinit var binding : ActivityPolaNaviBinding\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        binding = ActivityPolaNaviBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        setFragment(TAG_LOGIN,LoginFragment())\r\n        binding.navigationView.setOnItemSelectedListener { item->\r\n            when(item.itemId){\r\n                R.id.calendarFragment->{\r\n                    setFragment(TAG_CALENDAR, CalendarFragment())\r\n                    true\r\n                }\r\n                R.id.diaryFragment->{\r\n                    setFragment(TAG_DIARY,DiaryFragment())\r\n                    true\r\n                }\r\n                R.id.mypageFragment->{\r\n                    setFragment(TAG_MY_PAGE,MypageFragment())\r\n                    true\r\n                }\r\n                else -> false\r\n            }\r\n\r\n        }\r\n    }\r\n    private fun setFragment(tag:String, fragment: Fragment){\r\n        val manager:FragmentManager = supportFragmentManager\r\n        val fragTransaction = manager.beginTransaction()\r\n\r\n        if(manager.findFragmentByTag(tag)==null){\r\n            fragTransaction.add(R.id.mainFrameLayout,fragment,tag)\r\n        }\r\n\r\n        val keyword = manager.findFragmentByTag(TAG_KEYWORD)\r\n        val calendar = manager.findFragmentByTag(TAG_CALENDAR)\r\n        val diary = manager.findFragmentByTag(TAG_DIARY)\r\n        val mypage = manager.findFragmentByTag(TAG_MY_PAGE)\r\n        val login = manager.findFragmentByTag(TAG_LOGIN)\r\n        val theme = manager.findFragmentByTag(TAG_THEME)\r\n\r\n        if (calendar != null){\r\n            fragTransaction.hide(calendar)\r\n        }\r\n\r\n        if (diary != null){\r\n            fragTransaction.hide(diary)\r\n        }\r\n\r\n        if (mypage != null) {\r\n            fragTransaction.hide(mypage)\r\n        }\r\n\r\n        if (tag == TAG_CALENDAR) {\r\n            if (calendar!=null){\r\n                fragTransaction.show(calendar)\r\n            }\r\n        }\r\n        else if (tag == TAG_DIARY) {\r\n            if (diary != null) {\r\n                fragTransaction.show(diary)\r\n            }\r\n        }\r\n\r\n        else if (tag == TAG_MY_PAGE){\r\n            if (mypage != null){\r\n                fragTransaction.show(mypage)\r\n            }\r\n        }\r\n\r\n        else if(tag== TAG_KEYWORD){\r\n            if(keyword!=null){\r\n                fragTransaction.show(keyword)\r\n            }\r\n        }\r\n\r\n        else if(tag== TAG_LOGIN){\r\n            if(login!=null){\r\n                fragTransaction.show(login)\r\n            }\r\n        }\r\n\r\n        else if(tag== TAG_THEME){\r\n            if(theme!=null){\r\n                fragTransaction.show(theme)\r\n            }\r\n        }\r\n\r\n        fragTransaction.commitAllowingStateLoss()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/sokdaksokdak/PolaNaviActivity.kt b/app/src/main/java/com/example/sokdaksokdak/PolaNaviActivity.kt
+--- a/app/src/main/java/com/example/sokdaksokdak/PolaNaviActivity.kt	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/java/com/example/sokdaksokdak/PolaNaviActivity.kt	(date 1668701173591)
+@@ -1,11 +1,12 @@
+ package com.example.sokdaksokdak
+ 
+-import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
++import androidx.appcompat.app.AppCompatActivity
+ import androidx.fragment.app.Fragment
+ import androidx.fragment.app.FragmentManager
+ import com.example.sokdaksokdak.databinding.ActivityPolaNaviBinding
+ 
++
+ private const val TAG_KEYWORD = "keyword_fragment"
+ private const val TAG_CALENDAR ="calender_fragment"
+ private const val TAG_DIARY = "diary_fragment"
+@@ -15,8 +16,10 @@
+ 
+ class PolaNaviActivity : AppCompatActivity() {
+     private lateinit var binding : ActivityPolaNaviBinding
++    var themeType:Int = 2 // 처음 테마 값
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
++
+         binding = ActivityPolaNaviBinding.inflate(layoutInflater)
+         setContentView(binding.root)
+ 
+@@ -24,15 +27,15 @@
+         binding.navigationView.setOnItemSelectedListener { item->
+             when(item.itemId){
+                 R.id.calendarFragment->{
+-                    setFragment(TAG_CALENDAR, CalendarFragment())
++                    setFragment(TAG_CALENDAR, CalendarFragment(themeType))
+                     true
+                 }
+                 R.id.diaryFragment->{
+-                    setFragment(TAG_DIARY,DiaryFragment())
++                    setFragment(TAG_DIARY,DiaryFragment(themeType))
+                     true
+                 }
+                 R.id.mypageFragment->{
+-                    setFragment(TAG_MY_PAGE,MypageFragment())
++                    setFragment(TAG_THEME,ThemeChangeFragment())
+                     true
+                 }
+                 else -> false
+@@ -40,13 +43,21 @@
+ 
+         }
+     }
++    fun setDataAtFragment(tag:String, fragment:Fragment, theme:Int) {
++        val bundle = Bundle()
++        bundle.putInt("theme", theme)
++
++        fragment.arguments = bundle
++        setFragment(tag,fragment)
++    }
+     private fun setFragment(tag:String, fragment: Fragment){
+         val manager:FragmentManager = supportFragmentManager
+         val fragTransaction = manager.beginTransaction()
+ 
+-        if(manager.findFragmentByTag(tag)==null){
+-            fragTransaction.add(R.id.mainFrameLayout,fragment,tag)
+-        }
++        fragTransaction.add(R.id.mainFrameLayout,fragment,tag)
++//        if(manager.findFragmentByTag(tag)==null){
++//            fragTransaction.add(R.id.mainFrameLayout,fragment,tag)
++//        }
+ 
+         val keyword = manager.findFragmentByTag(TAG_KEYWORD)
+         val calendar = manager.findFragmentByTag(TAG_CALENDAR)
+@@ -67,6 +78,10 @@
+             fragTransaction.hide(mypage)
+         }
+ 
++        if (theme != null) {
++            fragTransaction.hide(theme)
++        }
++
+         if (tag == TAG_CALENDAR) {
+             if (calendar!=null){
+                 fragTransaction.show(calendar)
+@@ -104,4 +119,22 @@
+ 
+         fragTransaction.commitAllowingStateLoss()
+     }
++
++
++    fun receiveData(diary:DiaryFragment, calendar:CalendarFragment,diaryTheme: Int){
++
++        this.themeType = diaryTheme
++        setFragment(TAG_DIARY,diary)
++        setFragment(TAG_CALENDAR,calendar)
++//        setFragment(TAG_THEME,ThemeChangeFragment())
++
++
++//        val manager:FragmentManager = supportFragmentManager
++//        val fragTransaction = manager.beginTransaction()
++//
++//        fragTransaction.add(R.id.mainFrameLayout,diary, TAG_DIARY)
++//        fragTransaction.commit()
++    }
++
++
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_theme.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_theme.xml b/app/src/main/res/layout/fragment_theme.xml
+new file mode 100644
+--- /dev/null	(date 1668601980748)
++++ b/app/src/main/res/layout/fragment_theme.xml	(date 1668601980748)
+@@ -0,0 +1,109 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@color/white"
++    tools:context=".ThemeFragment">
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:orientation="vertical"
++        android:weightSum="20"
++        android:background="@drawable/calendar_pola">
++        <TextView
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:textColor="@color/pola_gray"
++            android:textSize="20dp"
++            android:text="테마"
++            android:background="@color/white"
++            android:gravity="center"
++            android:padding="13dp"
++            />
++        <RadioGroup
++            android:id="@+id/themeRadioGrp"
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            android:layout_weight="7"
++            android:orientation="vertical">
++
++
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_weight="2"
++                android:background="@color/pola_navi"
++                android:weightSum="15"
++                android:gravity="center"
++                android:layout_marginBottom="5dp"
++                android:orientation="horizontal">
++                <ImageView
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:layout_weight="3"
++                    android:src="@drawable/preview_pola" />
++
++                <TextView
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:layout_weight="10"
++                    android:textSize="20dp"
++                    android:layout_margin="10dp"
++                    android:textColor="@color/pola_day_gray"
++                    android:text="폴라로이드 모드"/>
++
++            </LinearLayout>
++            <RadioButton
++                android:id="@+id/pola_theme_radioBtn"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="폴라로이드"
++                android:background="@color/pola_navi"
++                android:textSize="15dp"
++                android:textColor="@color/black"
++                />
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_weight="2"
++                android:background="@color/pola_navi"
++                android:weightSum="15"
++                android:gravity="center"
++                android:layout_marginBottom="5dp"
++                android:orientation="horizontal">
++                <ImageView
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:layout_weight="3"
++                    android:src="@drawable/preview_clover" />
++                <TextView
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:layout_weight="10"
++                    android:textSize="20dp"
++                    android:layout_margin="10dp"
++                    android:textColor="@color/pola_day_gray"
++                    android:text="네잎클로버 모드"/>
++
++
++
++            </LinearLayout>
++
++            <RadioButton
++                android:id="@+id/clover_theme_radioBtn"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="네잎클로버"
++                android:background="@color/pola_navi"
++                android:textSize="15dp"
++                android:textColor="@color/black"/>
++
++        </RadioGroup>
++
++
++    </LinearLayout>
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_theme_change.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/white\"\r\n    tools:context=\".ThemeChangeFragment\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        android:weightSum=\"20\"\r\n        android:background=\"@drawable/calendar_pola\">\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:textColor=\"@color/pola_gray\"\r\n            android:textSize=\"20dp\"\r\n            android:text=\"테마\"\r\n            android:background=\"@color/white\"\r\n            android:gravity=\"center\"\r\n            android:padding=\"13dp\"\r\n            />\r\n            <RadioGroup\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"0dp\"\r\n                android:layout_weight=\"7\"\r\n                android:orientation=\"vertical\">\r\n\r\n\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"0dp\"\r\n                        android:layout_weight=\"2\"\r\n                        android:background=\"@color/pola_navi\"\r\n                        android:weightSum=\"15\"\r\n                        android:gravity=\"center\"\r\n                        android:layout_marginBottom=\"5dp\"\r\n                        android:orientation=\"horizontal\">\r\n                        <ImageView\r\n                            android:layout_width=\"0dp\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:layout_weight=\"3\"\r\n                            android:src=\"@drawable/preview_pola\" />\r\n\r\n                        <TextView\r\n                            android:layout_width=\"0dp\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:layout_weight=\"10\"\r\n                            android:textSize=\"20dp\"\r\n                            android:layout_margin=\"10dp\"\r\n                            android:textColor=\"@color/pola_day_gray\"\r\n                            android:text=\"폴라로이드 모드\"/>\r\n\r\n                    </LinearLayout>\r\n                <RadioButton\r\n                    android:id=\"@+id/pola_theme_radioBtn\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"폴라로이드\"\r\n                    android:background=\"@color/pola_navi\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"@color/black\"\r\n                    />\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"0dp\"\r\n                    android:layout_weight=\"2\"\r\n                    android:background=\"@color/pola_navi\"\r\n                    android:weightSum=\"15\"\r\n                    android:gravity=\"center\"\r\n                    android:layout_marginBottom=\"5dp\"\r\n                    android:orientation=\"horizontal\">\r\n                    <ImageView\r\n                        android:layout_width=\"0dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_weight=\"3\"\r\n                        android:src=\"@drawable/preview_clover\" />\r\n                    <TextView\r\n                        android:layout_width=\"0dp\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_weight=\"10\"\r\n                        android:textSize=\"20dp\"\r\n                        android:layout_margin=\"10dp\"\r\n                        android:textColor=\"@color/pola_day_gray\"\r\n                        android:text=\"네잎클로버 모드\"/>\r\n\r\n\r\n\r\n                </LinearLayout>\r\n\r\n                <RadioButton\r\n                    android:id=\"@+id/clover_theme_radioBtn\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"네잎클로버\"\r\n                    android:background=\"@color/pola_navi\"\r\n                    android:textSize=\"15dp\"\r\n                    android:textColor=\"@color/black\"/>\r\n\r\n        </RadioGroup>\r\n\r\n\r\n    </LinearLayout>\r\n\r\n\r\n\r\n\r\n</FrameLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_theme_change.xml b/app/src/main/res/layout/fragment_theme_change.xml
+--- a/app/src/main/res/layout/fragment_theme_change.xml	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/res/layout/fragment_theme_change.xml	(date 1668601980776)
+@@ -24,6 +24,7 @@
+             android:padding="13dp"
+             />
+             <RadioGroup
++                android:id="@+id/themeRadioGrp"
+                 android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_weight="7"
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"pola_gray\">#8C8C8C</color>\r\n    <color name=\"pola_white\">#F4F4F4</color>\r\n    <color name=\"pola_navi\">#E0E0E0</color>\r\n    <color name=\"pola_day_gray\">#656565</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/res/values/colors.xml	(date 1668604762832)
+@@ -11,4 +11,5 @@
+     <color name="pola_white">#F4F4F4</color>
+     <color name="pola_navi">#E0E0E0</color>
+     <color name="pola_day_gray">#656565</color>
++    <color name="green">#238823</color>
+ </resources>
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'org.jetbrains.kotlin.android'\r\n}\r\napply plugin: 'kotlin-android'\r\n\r\nandroid {\r\n    compileSdk 33\r\n    viewBinding {\r\n        enabled true\r\n    }\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.sokdaksokdak\"\r\n        minSdk 21\r\n        targetSdk 33\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.core:core-ktx:1.7.0'\r\n    implementation 'androidx.appcompat:appcompat:1.4.2'\r\n    implementation 'com.google.android.material:material:1.6.1'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\r\n    testImplementation 'junit:junit:4.13.2'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.3'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'\r\n    implementation \"com.kakao.sdk:v2-all:2.11.2\" // 전체 모듈 설치, 2.11.0 버전부터 지원\r\n    implementation \"com.kakao.sdk:v2-user:2.11.2\" // 카카오 로그인\r\n    implementation \"androidx.core:core-ktx:+\"\r\n    implementation \"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version\"\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/build.gradle	(date 1668601594920)
+@@ -41,6 +41,9 @@
+     implementation 'androidx.appcompat:appcompat:1.4.2'
+     implementation 'com.google.android.material:material:1.6.1'
+     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
++    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
++    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
++    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+     testImplementation 'junit:junit:4.13.2'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.sokdaksokdak\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.AppCompat.NoActionBar\"\r\n        tools:targetApi=\"31\">\r\n\r\n\r\n        <meta-data\r\n            android:name=\"com.kakao.sdk.AppKey\"\r\n            android:value=\"@string/kakao_app_key\" />\r\n\r\n        <activity\r\n            android:name=\"com.kakao.sdk.auth.AuthCodeHandlerActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.VIEW\" />\r\n\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n                <category android:name=\"android.intent.category.BROWSABLE\" />\r\n\r\n                <!-- Redirect URI: \"kakao{NATIVE_APP_KEY}://oauth\" -->\r\n                <data\r\n                    android:host=\"oauth\"\r\n                    android:scheme=\"@string/kakao_native_key\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <activity\r\n            android:name=\".PolaNaviActivity\"\r\n            android:exported=\"true\">\r\n        </activity>\r\n        <activity\r\n            android:name=\".PolaSplashActivity\"\r\n            android:theme=\"@style/Theme.Design.Light.NoActionBar\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\".MainActivity\">\r\n\r\n        </activity>\r\n    </application>\r\n\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 8d5b5c9061212ddcfd9d6b3e2566d0c6220d0ab1)
++++ b/app/src/main/AndroidManifest.xml	(date 1668615262696)
+@@ -4,6 +4,7 @@
+     package="com.example.sokdaksokdak">
+ 
+     <uses-permission android:name="android.permission.INTERNET" />
++
+     <application
+         android:allowBackup="true"
+         android:dataExtractionRules="@xml/data_extraction_rules"
+@@ -14,7 +15,12 @@
+         android:supportsRtl="true"
+         android:theme="@style/Theme.AppCompat.NoActionBar"
+         tools:targetApi="31">
+-
++        <activity
++            android:name=".NaviActivity"
++            android:exported="false" />
++        <activity
++            android:name=".MainActivity2"
++            android:exported="false" />
+ 
+         <meta-data
+             android:name="com.kakao.sdk.AppKey"
+@@ -35,25 +41,20 @@
+                     android:scheme="@string/kakao_native_key" />
+             </intent-filter>
+         </activity>
+-
+         <activity
+             android:name=".PolaNaviActivity"
+-            android:exported="true">
+-        </activity>
++            android:exported="true" />
+         <activity
+             android:name=".PolaSplashActivity"
+-            android:theme="@style/Theme.Design.Light.NoActionBar"
+-            android:exported="true">
++            android:exported="true"
++            android:theme="@style/Theme.Design.Light.NoActionBar">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
++
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity
+-            android:name=".MainActivity">
+-
+-        </activity>
++        <activity android:name=".MainActivity" />
+     </application>
+ 
+-
+ </manifest>
+\ No newline at end of file

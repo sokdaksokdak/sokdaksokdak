@@ -4,7 +4,9 @@
     package="com.example.sokdaksokdak">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,12 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
+        <activity
+            android:name=".ThemeChangeActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
+            android:value="c7795b54e50244f372d84a1c2663a365" />
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -32,28 +38,24 @@
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
                 <data
                     android:host="oauth"
-                    android:scheme="@string/kakao_native_key" />
+                    android:scheme="kakaoc7795b54e50244f372d84a1c2663a365" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".PolaNaviActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".PolaSplashActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity">
-
-        </activity>
+            android:name=".MainActivity"
+            android:exported="true"></activity>
     </application>
-
 
 </manifest>

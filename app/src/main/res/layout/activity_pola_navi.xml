@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:itemBackground="@color/pola_navi"
+            app:backgroundTint="?attr/colorAccent"
             app:itemIconTint="@drawable/menu_click_color"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"

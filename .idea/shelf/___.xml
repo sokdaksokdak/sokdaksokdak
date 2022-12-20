@@ -1,0 +1,9 @@
+<changelist name="다이어리,_캘린더_테마" date="1668784391593" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/다이어리,_캘린더_테마/shelved.patch" />
+  <option name="DESCRIPTION" value="다이어리, 캘린더 테마" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-v24/diary_clover.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/다이어리,_캘린더_테마/diary_clover.png" />
+  </binary>
+</changelist>
