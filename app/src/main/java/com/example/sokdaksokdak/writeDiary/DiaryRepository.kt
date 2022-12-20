@@ -30,7 +30,6 @@ class DiaryRepository(application: Application) {
         thread.start()
     }
 
-    // TODO: 반환이 제대로 안 되는 문제
     fun getTodayKeyword(): String {
         var todayKeyword: String = "Get Today Keyword"
 
@@ -70,13 +69,13 @@ class DiaryRepository(application: Application) {
         return isExists
     }
 
-    fun deleteData() {
+    /*fun deleteData() {
         val r = Runnable {
             diaryDao.deleteData()
         }
         val thread = Thread(r)
         thread.start()
-    }
+    }*/
 
     fun getDiaryContent(): String {
         var diaryContent: String = "Get Today Diary Content"

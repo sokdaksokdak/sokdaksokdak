@@ -68,7 +68,7 @@ class LoginFragment : Fragment() {
                 firebaseAuthWithGoogle(account)
                 Log.i("google login",account.givenName + "구글 로그인 성공")
             } catch (e: ApiException) {
-                //Toast.makeText(this, "구글 회원가입에 실패하였습니다: ${e.message}", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "구글 회원가입에 실패하였습니다: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.i("google login","구글 로그인 실패")
             }
         }

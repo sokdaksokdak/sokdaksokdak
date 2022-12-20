@@ -40,10 +40,11 @@
 
         <ImageButton
             android:id="@+id/kakao_login_button"
-            android:layout_width="wrap_content"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
             android:background="@android:color/transparent"
-            android:src="@drawable/kakao_login_medium_narrow"
+            android:src="@drawable/kakao_login_medium_wide_eng"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -62,7 +63,7 @@
 
             <ImageButton
                 android:id="@+id/googleLoginButton"
-                android:layout_width="230dp"
+                android:layout_width="280dp"
                 android:layout_height="50dp"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"

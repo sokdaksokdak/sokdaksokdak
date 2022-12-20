@@ -3,6 +3,7 @@ package com.example.sokdaksokdak
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -18,7 +19,6 @@ import com.kakao.sdk.user.UserApiClient
 private const val TAG_DIARY = "diary_fragment"
 private const val TAG_LOGIN = "login_fragment"
 private const val TAG_MY_PAGE = "mypage_fragment"
-private const val TAG_THEME = "theme_change_fragment"
 
 class PolaNaviActivity : AppCompatActivity() {
     private lateinit var binding : ActivityPolaNaviBinding
@@ -49,17 +49,37 @@ class PolaNaviActivity : AppCompatActivity() {
                 if(currentUser != null){
                     Log.d("로그인 화면", "이미 구글 로그인되어있음")
                     setFragment(TAG_DIARY,DiaryFragment())
+                    binding.navigationView.visibility = View.VISIBLE
                 }else{
+                    binding.navigationView.visibility = View.GONE
                     Log.d("로그인 화면", "아직 구글 로그인 안함")
                     setFragment(TAG_LOGIN, LoginFragment())
                 }
             } else if (tokenInfo != null) {
                 Log.d("로그인 화면", "이미 카카오 로그인되어있음")
                 setFragment(TAG_DIARY,DiaryFragment())
+                binding.navigationView.visibility = View.VISIBLE
             }
         }
+        binding.navigationView.visibility = View.VISIBLE
 
+        // 테마 변경시 intent에서 받은 int값 확인해 fragement 연결 (0: 다이어리, 1: 설정페이지)
+        when(intent.getIntExtra("frag",0)){
+            0->{
+                setFragment(TAG_DIARY, DiaryFragment())
+                true
+            }
+            1->{
+                setFragment(TAG_MY_PAGE,MypageFragment())
+                true
+            }
+            else -> false
+        }
+
+
+        // 네이게이션 바에 fragment 연결
         binding.navigationView.setOnItemSelectedListener { item->
+            // 메뉴 선택시 해당 화면 setting
             when(item.itemId){
                 R.id.diaryFragment->{
                     setFragment(TAG_DIARY, DiaryFragment())
@@ -88,6 +108,7 @@ class PolaNaviActivity : AppCompatActivity() {
             super.onResume()
     }
 
+
     fun getAppTheme(theme: String?): Int {
         var newTheme: Int
         when (theme) {
@@ -100,6 +121,7 @@ class PolaNaviActivity : AppCompatActivity() {
     }
 
 
+    // fragment setting 함수
     private fun setFragment(tag: String, fragment: Fragment) {
         val manager: FragmentManager = supportFragmentManager
         val fragTransaction = manager.beginTransaction()
@@ -112,7 +134,6 @@ class PolaNaviActivity : AppCompatActivity() {
         val diary = manager.findFragmentByTag(TAG_DIARY)
         val mypage = manager.findFragmentByTag(TAG_MY_PAGE)
         val login = manager.findFragmentByTag(TAG_LOGIN)
-        val theme = manager.findFragmentByTag(TAG_THEME)
 
 
         if (diary != null) {
@@ -121,9 +142,6 @@ class PolaNaviActivity : AppCompatActivity() {
 
         if (mypage != null) {
             fragTransaction.hide(mypage)
-        }
-        if (theme != null) {
-            fragTransaction.hide(theme)
         }
 
          if (tag == TAG_DIARY) {
@@ -137,10 +155,6 @@ class PolaNaviActivity : AppCompatActivity() {
         } else if (tag == TAG_LOGIN) {
             if (login != null) {
                 fragTransaction.show(login)
-            }
-        } else if (tag == TAG_THEME) {
-            if (theme != null) {
-                fragTransaction.show(theme)
             }
         }
 

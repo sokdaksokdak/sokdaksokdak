@@ -54,7 +54,7 @@ class WriteDiaryViewModel(application: Application): AndroidViewModel(applicatio
         Log.i("현재 저장 keyword: ", keywordDB)
 
         return if (keywordDB == "키워드를 선택하세요."){
-            // TODO: 키워드 추천 여부
+            // 키워드 추천 여부
             //  1. SharedPreference 에서 사용자의 키워드 추천 여부 확인
             //     1.1 추천 - random 값 가져오기
             //     1.2 비추천 - "키워드를 입력하세요."로 수정
@@ -87,9 +87,9 @@ class WriteDiaryViewModel(application: Application): AndroidViewModel(applicatio
         return keyword
     }
 
-    fun deleteData() {
+    /*fun deleteData() {
         writeDiary.deleteData()
-    }
+    }*/
 
     fun setKeyword(keyword: String) {
         writeDiary.updateKeyword(keyword)

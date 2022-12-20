@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/drawable/box_border.xml" value="0.1495" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/drawable/button_round.xml" value="0.143" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1495" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/drawable/menu_click_color.xml" value="0.1" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/font/custom_font.xml" value="0.1" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/font/custom_font_family.xml" value="0.1" />
@@ -11,7 +13,8 @@
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/activity_main.xml" value="0.175" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/activity_pola_navi.xml" value="0.1" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/activity_pola_splash.xml" value="0.1" />
-        <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/activity_theme_change.xml" value="0.1" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/activity_thema_change.xml" value="0.175" />
+        <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/activity_theme_change.xml" value="0.22" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/fragment_calendar.xml" value="0.1" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/fragment_calendar_clover.xml" value="0.1" />
         <entry key="..\:/Users/82105/AndroidStudioProjects/architectureProject/sokdaksokdak/app/src/main/res/layout/fragment_diary.xml" value="0.22" />

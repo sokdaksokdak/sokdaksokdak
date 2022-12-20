@@ -59,7 +59,7 @@ class PolaSplashActivity : AppCompatActivity() {
 
     }
     companion object{
-        private const val Duration:Long=3000
+        private const val Duration:Long=1000
     }
 
     override fun onBackPressed() {
