@@ -97,4 +97,72 @@ class DiaryRepository(application: Application) {
 
     }
 
+
+    fun getDateKeyword(date:String): String {
+        var dateKeyword: String = "Get date Keyword"
+
+        val r = Runnable {
+            dateKeyword = diaryDao.getDateKeyword(date)
+            println("\ntodayKeyword from DB in Runnable: "+dateKeyword)
+        }
+
+        val thread = Thread(r)
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: Exception) {
+            println("thread join exception in getTodayKeyword")
+        }
+
+        return dateKeyword
+    }
+
+    fun isDateDataExists(date:String): Boolean {
+        var isExists: Boolean = false
+        println("isExists: " + isExists)
+
+        val r = Runnable {
+            isExists = diaryDao.isDateDataExist(date)
+            println("isExists: " + isExists)
+        }
+
+        val thread = Thread(r)
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: Exception) {
+            println("thread join exception in isDataExists")
+        }
+        println("isExist: " + isExists)
+        return isExists
+    }
+
+    /*fun deleteData() {
+        val r = Runnable {
+            diaryDao.deleteData()
+        }
+        val thread = Thread(r)
+        thread.start()
+    }*/
+
+    fun getDateDiaryContent(date:String): String {
+        var diaryDateContent: String = "Get Today Diary Content"
+
+        val r = Runnable {
+            diaryDateContent = diaryDao.getDateContent(date)
+            println("\ndiaryContent from DB in Runnable: "+diaryDateContent)
+        }
+
+        val thread = Thread(r)
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: Exception) {
+            println("thread join exception in getDiaryContent")
+        }
+
+        return diaryDateContent
+
+    }
+
 }

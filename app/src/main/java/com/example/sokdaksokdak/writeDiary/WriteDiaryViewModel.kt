@@ -9,6 +9,7 @@ import com.example.sokdaksokdak.database.AppDatabase
 
 class WriteDiaryViewModel(application: Application): AndroidViewModel(application) {
     var recommendKeyword = RecommendKeyword()
+    lateinit var date:String
     private var writeDiary = WriteDiary(application)
 
     public fun insertData() {

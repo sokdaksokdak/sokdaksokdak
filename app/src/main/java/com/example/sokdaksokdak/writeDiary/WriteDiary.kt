@@ -8,6 +8,9 @@ class WriteDiary(application: Application) {
 
     private lateinit var keyword: String
     private lateinit var content: String
+    private val date: Int by lazy{
+        20221218
+    }
     // 날짜는? - (select datetime('now', 'localtime')
 
     init {
@@ -57,5 +60,17 @@ class WriteDiary(application: Application) {
 
     fun getDiaryContent(): String {
         return repository.getDiaryContent()
+    }
+
+    fun isDateDataExists(date:String):Boolean{
+        return repository.isDateDataExists(date)
+    }
+
+     fun getDateKeyword(date:String): String{
+        return repository.getDateKeyword(date)
+    }
+
+    fun getDateDiaryContent(date:String):String{
+        return repository.getDateDiaryContent(date)
     }
 }

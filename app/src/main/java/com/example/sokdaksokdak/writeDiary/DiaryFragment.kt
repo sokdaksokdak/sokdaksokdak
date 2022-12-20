@@ -1,6 +1,5 @@
 package com.example.sokdaksokdak.writeDiary
 
-import android.content.Intent
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -15,12 +14,14 @@ import androidx.annotation.RequiresApi
 
 import androidx.lifecycle.ViewModelProvider
 import com.example.sokdaksokdak.Diary.CalendarFragment
+import com.example.sokdaksokdak.Diary.CalendarViewModel
 import com.example.sokdaksokdak.databinding.FragmentDiaryBinding
 import java.time.LocalDate
 
 class DiaryFragment : Fragment() {
     private lateinit var binding: FragmentDiaryBinding
     private lateinit var writeDiaryViewModel: WriteDiaryViewModel
+    private lateinit var calendarViewModel: CalendarViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class DiaryFragment : Fragment() {
 
 
         writeDiaryViewModel = ViewModelProvider(this).get(WriteDiaryViewModel::class.java)
-
+        calendarViewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
         // Diary Table 비우기 - 확인을 위함
         // writeDiaryViewModel.deleteData()
 
@@ -151,11 +152,13 @@ class DiaryFragment : Fragment() {
                 if(resultKey == "KEY"){
 
                     val selectedDate = bundle.getString("SELECTED_DATE")?.split("-")
-
+                    Log.e("loggg", selectedDate.toString())
                     val day = selectedDate?.get(0)
                     val month = selectedDate?.get(1)
+                    val year = selectedDate?.get(2)
+                    val date: String = year+"-"+month+"-"+day
                     if (day != null) {
-                        Log.e("log", day)
+                        Log.e("loggg", date)
                     }
                     if (month != null) {
                         Log.e("log", month)
@@ -163,12 +166,21 @@ class DiaryFragment : Fragment() {
 
                     binding.monthTextView.text = month
                     binding.dayTextView.text = day
+
+                    binding.diaryTextView.visibility = View.VISIBLE
+                    binding.diaryEditText.visibility = View.GONE
+                    binding.diaryTextView.setText(calendarViewModel.showDateContent(date))
+
+                    binding.keywordEditView.visibility = View.GONE
+                    binding.keywordTextView.visibility = View.VISIBLE
+                    binding.keywordTextView.setText(calendarViewModel.showDateKeyWord(date))
                 }
                 else{
                     Log.e("log", "fail")
                 }
             }
             datePickerFragment.show(supportFragment,"CalendarFragment")
+
 
         }
 

@@ -24,7 +24,7 @@ import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+//google로그인 알고리즘을 수행하는 클래스
 class GoogleSocial : AppCompatActivity(), SocialLogin {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var context : Context
@@ -42,18 +42,18 @@ class GoogleSocial : AppCompatActivity(), SocialLogin {
 
     override fun Login(context: Context?) {
         if(context != null){
-            this.context = context
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            this.context = context //login fragment의 context를 사용
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN) // 구글 사용자 정보를 가져오기 위한 키
                 .requestIdToken("72536997949-mgi6or994u3rn0bfnseto9ucpnd2bdft.apps.googleusercontent.com")
                 .requestEmail()
                 .build()
 
-            googleSignInClient = GoogleSignIn.getClient(context,gso)
+            googleSignInClient = GoogleSignIn.getClient(context,gso) // 구글 사용자 정보
             auth = FirebaseAuth.getInstance()
         }
     }
 
     fun getClient(): GoogleSignInClient {
-        return this.googleSignInClient
+        return this.googleSignInClient // 구글 사용자 정보를 반환한다
     }
 }

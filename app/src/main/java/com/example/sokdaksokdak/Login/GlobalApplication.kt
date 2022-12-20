@@ -2,7 +2,7 @@ package com.example.sokdaksokdak
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
-
+//카카오 로그인 api를 사용하기 위한 클래스
 class GlobalApplication: Application() {
     override fun onCreate() {
         super.onCreate()

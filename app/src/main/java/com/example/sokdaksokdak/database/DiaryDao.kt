@@ -23,8 +23,21 @@ interface DiaryDao {
     @Query("SELECT date FROM diary_table")
     fun getDate(): List<Int>
 
-    @Query("select * from diary_table where date=:date")
-    fun getDateData(date:Int):Diary
+//    @Query("select diary_context from diary_table where date=date")
+//    //@Query("select * from diary_table where date=:date")
+//    fun getDateData(date:Int)
+
+    @Query("select keyword from diary_table where date=:date")
+    fun getDateKeyword(date:String): String
+
+    @Query("select exists (select keyword from diary_table where date=:date)")
+    fun isDateDataExist(date:String): Boolean
+
+    @Query("select diary_context from diary_table where date=:date")
+    //@Query("select * from diary_table where date=:date")
+    fun getDateContent(date:String):String
+
+
 
     @Query("delete from diary_table")
     fun deleteData()
@@ -39,10 +52,11 @@ interface DiaryDao {
     @Query("select keyword from diary_table where date=(select date('now', 'localtime'))")
     fun getTodayKeyword(): String
 
-    // 날짜로 keyword 가져오기
     @Query("select exists (select keyword from diary_table where date=(select date('now', 'localtime')))")
     fun isDataExist(): Boolean
 
     @Query("select diary_context from diary_table where date=(select date('now', 'localtime'))")
     fun getDiaryContent(): String
+
+
 }
