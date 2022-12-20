@@ -15,14 +15,12 @@ class RecommendKeyword() {
             "필름", "유행", "일상", "과거", "미래", "목표", "성공", "만년필", "오늘", "시간")
         println("keyword list size: " + this.keyList.size)
         /*
-        * 1. 메모리 상에서 리스트에 365개의 단어 저장 -> 랜덤으로 추출하여 가져오기
-        * 2. 앱 설치할 때, 동시에 Room DB의 Keyword 테이블에 365개 단어 넣는 initialize 과정 거치기
-        *
-        for (i:Int in 1..365){ // 365개 단어 포함한 리스트 구성 - 대신 숫자로 테스트
-            this.keyList.add(i.toString())
-        }*/
+        * 메모리 상에서 리스트에 365개의 단어 저장 -> 랜덤으로 추출하여 가져오기
+        * => 현재 단어 개수 모자름. 추후 확장 예정
+        **/
     }
 
+    // 랜덤 키워드 반환
     public fun randomKeyword(): String{
         return this.keyList[(Math.random()*(this.keyList.size)).toInt()]
     }

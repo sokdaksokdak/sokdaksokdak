@@ -40,63 +40,61 @@ class DiaryFragment : Fragment() {
         binding.monthTextView.text = Date.toString().split("-")[1]
         binding.dayTextView.text = Date.toString().split("-")[2]
 
-
         writeDiaryViewModel = ViewModelProvider(this).get(WriteDiaryViewModel::class.java)
         calendarViewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
-        // Diary Table 비우기 - 확인을 위함
-        // writeDiaryViewModel.deleteData()
 
-        // 사용자의 keyword 추천 여부 반영 - 예외 처리
 
-        // 앱 실행 시, 현재 날짜에 대한 DB Data 존재 및 작성 완료 상태 확인
-        // -> 존재하지 않을 때
-        //    -> insertData
-        //    => 존재할 때의 순서 시행
-        // -> 존재
-        //    -> keyword & 내용 모두 작성 완료된 상태인지 확인
-        //    -> keyword 만 갱신 된 상태일 때
-
-        // 사용자가 keyword 를 수정했을 때
-        // 실시간 DB 반영
+        // 앱 실행 시, 현재 날짜에 해당하는 일기 작성/열람 페이지를 제공하기 때문에
+        // 1. 오늘 날짜에 대한 DB Data 존재와 작성 완료 여부 확인
+        //    1.1. 오늘 날짜의 데이터가 존재하지 않을 때
+        //         -> insertData 진행 후, 존재할 때의 순서 시행
+        //    1.2. 오늘 날짜의 데이터가 존재할 때
+        //         1.2.1. keyword & 내용 모두 작성 완료된 상태인지 확인
+        //         1.2.2. keyword 만 갱신 된 상태일 때
 
 
         // checkDataExists
         /**
          * 1. 오늘 날짜에 해당하는 일기 데이터가 존재하는지 확인
-         *    1.1. 없는 경우 - 새로운 데이터 추가
+         *    1.1. 오늘 날짜의 데이터가 없는 경우 - 새로운 데이터 추가
          * */
         if (!writeDiaryViewModel.checkDataExists()){ // 오늘의 Data 존재하지 않을 때
             writeDiaryViewModel.insertData()
         }
 
 
-        // showKeyword
         /**
-         * keyword & 내용 모두 작성 완료된 상태라면
-         * EditText 가 아닌 TextView 로 화면에 표시
+         *    1.2. 오늘 날짜의 데이터가 존재할 때
+         *         1.2.1. keyword & 내용 모두 작성 완료된 상태
+         *                -> EditText 가 아닌 TextView 로 화면에 표시
+         *         1.2.2. keyword 만 갱신 된 상태일 때
+         *                -> keyword 표시
+         *                &  keyword 수정 및 일기 내용 작성 화면 제공
          * */
-
+        // SharedPreference 에 저장되어 있는 '사용자가 설정한 키워드 추천 여부' 데이터를 불러온다.
         val shared = requireActivity().getSharedPreferences("keyword", Context.MODE_PRIVATE)
         val key = shared.getBoolean("isKeyword",true)
         Log.i("키워드 추천 여부", key.toString())
 
+        // keyword & 내용 모두 작성 완료된 상태
         if (writeDiaryViewModel.checkDiaryCompleted()){
-            // 작성 완료 버튼 없는 것으로 취급
+            // View 의 요소 수정
+            // - 작성 완료 버튼 없는 것으로 취급
             binding.diaryDoneBtn.visibility = View.GONE
 
-            // 일기 작성 칸 TextView 로 데이터 표시만. EditText 는 없는 것으로 취급
-            binding.diaryTextView.visibility = View.VISIBLE
-            binding.diaryEditText.visibility = View.GONE
-            binding.diaryTextView.setText(writeDiaryViewModel.showContent())
+            // - 일기 내용 칸 TextView 로 데이터 표시만(수정 불가). EditText(수정 가능)는 없는 것으로 취급
+            binding.diaryTextView.visibility = View.VISIBLE // textView 표시
+            binding.diaryEditText.visibility = View.GONE    // editText 없애기
+            binding.diaryTextView.setText(writeDiaryViewModel.showContent()) // textView 에 일기 내용 표시
 
+            // - 키워드 칸 TextView 로 데이터 표시만(수정 불가). EditText(수정 가능)는 없는 것으로 취급
             binding.keywordEditView.visibility = View.GONE
             binding.keywordTextView.visibility = View.VISIBLE
-            binding.keywordTextView.setText(writeDiaryViewModel.showKeyword(key))
-        } else {
+            binding.keywordTextView.setText(writeDiaryViewModel.showKeyword(key)) // 키워드 표시
+        } else { // keyword 만 갱신 된 상태
             // showKeyword
             binding.keywordEditView.setText(writeDiaryViewModel.showKeyword(key))
 
-            // 추천 키워드를 화면에 표시
             // 사용자가 keyword 를 수정(또는 새로 입력)했을 때 -> 실시간 DB update
             binding.keywordEditView.addTextChangedListener(object : TextWatcher {
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -117,7 +115,6 @@ class DiaryFragment : Fragment() {
             // newDiaryData
             /**
              * 사용자가 일기 작성 완료 버튼 눌렀을 때 - DB update
-             *
              * */
             binding.diaryDoneBtn.setOnClickListener {
                 val keyword = binding.keywordEditView.text.toString()
@@ -125,7 +122,7 @@ class DiaryFragment : Fragment() {
 
                 writeDiaryViewModel.newDiaryData(keyword, content)
 
-                // 일기 작성 완료 후
+                // 일기 작성 완료 후, View 의 요소들 수정
                 // 버튼 없애기
                 // keyword, content: EditView -> TextView 변경
                 binding.diaryDoneBtn.visibility = View.GONE
@@ -137,12 +134,10 @@ class DiaryFragment : Fragment() {
                 binding.keywordEditView.visibility = View.GONE
                 binding.keywordTextView.visibility = View.VISIBLE
                 binding.keywordTextView.setText(writeDiaryViewModel.showKeyword(key))
-
-
             }
-
         }
-        //캘린더를 클릭시 ClickListener로 하여금 CalendarDialog 불러올것
+
+        //캘린더를 클릭시 ClickListener로 하여금 CalendarDialog 불러올 것
         binding.btnforCal.setOnClickListener{
             val datePickerFragment = CalendarFragment()
             val supportFragment = requireActivity().supportFragmentManager
