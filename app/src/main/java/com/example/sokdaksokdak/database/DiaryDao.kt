@@ -35,14 +35,14 @@ interface DiaryDao {
     //@Query("select * from diary_table where date=:date")
     fun getDateContent(date:String):String
 
-
-
     @Query("delete from diary_table")
     fun deleteData()
 
+    // 새로운 일기 데이터 생성
     @Query("INSERT INTO diary_table(keyword, date, diary_context) VALUES (:keyword, (select date('now', 'localtime')), :diary_context)")
     fun insertDiaryData(keyword: String, diary_context: String)
 
+    // 일기 키워드, 내용 업데이트
     @Query("UPDATE diary_table SET keyword=:keyword, diary_context=:diary_context WHERE date=(select date('now', 'localtime'))")
     fun updateDiaryData(keyword: String, diary_context: String)
 
@@ -50,9 +50,11 @@ interface DiaryDao {
     @Query("select keyword from diary_table where date=(select date('now', 'localtime'))")
     fun getTodayKeyword(): String
 
+    // 오늘의 일기 데이터 존재 여부
     @Query("select exists (select keyword from diary_table where date=(select date('now', 'localtime')))")
     fun isDataExist(): Boolean
 
+    // 오늘의 일기 내용 불러오기
     @Query("select diary_context from diary_table where date=(select date('now', 'localtime'))")
     fun getDiaryContent(): String
 

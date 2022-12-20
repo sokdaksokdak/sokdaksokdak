@@ -8,10 +8,12 @@ class DiaryRepository(application: Application) {
     private val database = AppDatabase.getInstance(application)!!
     private val diaryDao = database.diaryDao()
 
+    // diary 데이터베이스의 모든 데이터 가져오기
     fun getAll(): List<Diary>{
         return diaryDao.getAll()
     }
 
+    // 파라미터로 받은 키워드와 일기 내용을 데이터베이스에 삽입 - '오늘'의 데이터 생성에 사용
     fun insertData(keyword:String, content:String) {
         val r = Runnable {
             diaryDao.insertDiaryData(keyword, content)
@@ -21,6 +23,7 @@ class DiaryRepository(application: Application) {
         thread.start()
     }
 
+    // 파라미터로 받은 키워드와 일기 내용을 데이터베이스에 업데이트
     fun updateData(keyword: String, content: String){
         val r = Runnable {
             diaryDao.updateDiaryData(keyword, content)
@@ -30,6 +33,7 @@ class DiaryRepository(application: Application) {
         thread.start()
     }
 
+    // 오늘 일기의 키워드 불러오기
     fun getTodayKeyword(): String {
         var todayKeyword: String = "Get Today Keyword"
 
@@ -49,6 +53,7 @@ class DiaryRepository(application: Application) {
         return todayKeyword
     }
 
+    // 오늘 일기 데이터 존재 여부
     fun isDataExists(): Boolean {
         var isExists: Boolean = false
         println("isExists: " + isExists)
@@ -69,14 +74,7 @@ class DiaryRepository(application: Application) {
         return isExists
     }
 
-    /*fun deleteData() {
-        val r = Runnable {
-            diaryDao.deleteData()
-        }
-        val thread = Thread(r)
-        thread.start()
-    }*/
-
+    // 오늘 일기의 내용 불러오기
     fun getDiaryContent(): String {
         var diaryContent: String = "Get Today Diary Content"
 
@@ -97,7 +95,6 @@ class DiaryRepository(application: Application) {
 
     }
 
-
     //RoomDB로부터 날짜별 일기 키워드 가져오기
     fun getDateKeyword(date:String): String {
         var dateKeyword: String = "Get date Keyword"
@@ -117,6 +114,7 @@ class DiaryRepository(application: Application) {
 
         return dateKeyword
     }
+
     //RoomDB로부터 날짜별 일기 존재하는지 여부 가져오기
     fun isDateDataExists(date:String): Boolean {
         var isExists: Boolean = false
@@ -138,13 +136,6 @@ class DiaryRepository(application: Application) {
         return isExists
     }
 
-    /*fun deleteData() {
-        val r = Runnable {
-            diaryDao.deleteData()
-        }
-        val thread = Thread(r)
-        thread.start()
-    }*/
     //RoomDB로부터 날짜별 일기 내용 가져오기
     fun getDateDiaryContent(date:String): String {
         var diaryDateContent: String = "Get Today Diary Content"

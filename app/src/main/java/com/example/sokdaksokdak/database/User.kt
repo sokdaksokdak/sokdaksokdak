@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.PipedWriter
 
+// 사용자 정보가 저장되는 테이블
+// 사용자 이름, 사용자 생일
 @Entity(tableName = "user_table")
 data class User(
     @ColumnInfo(name = "user_name")

@@ -11,7 +11,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-
+//카카오 로그인 알고리즘을 수행하는 클래스
 class KakaoSocial : AppCompatActivity(), SocialLogin {
     lateinit var name: String
     private lateinit var binding: FragmentLoginBinding
@@ -23,7 +23,7 @@ class KakaoSocial : AppCompatActivity(), SocialLogin {
         setContentView(binding.root)
     }
 
-    override fun Login(context: Context?) {
+    override fun Login(context: Context?) { // login fragment의 context를 사용
         if(context != null){
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
@@ -35,6 +35,7 @@ class KakaoSocial : AppCompatActivity(), SocialLogin {
                             name = user.kakaoAccount?.profile?.nickname.toString()
                         }
                     }
+                    //로그인이 성공하면 화면을 전환한다
                     var intent = Intent(context, PolaNaviActivity::class.java)
                     context.startActivity(intent)
                 }

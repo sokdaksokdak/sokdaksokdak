@@ -10,10 +10,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [User::class, Diary::class],
-    version = 2,
+    version = 2, // DB에 관련된 내용이 수정되면 버전의 업그레이드가 필요함
     exportSchema = false
 )
 
+// RoomDB - Singleton 패턴 적용
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao() : UserDao
     abstract fun diaryDao() : DiaryDao
