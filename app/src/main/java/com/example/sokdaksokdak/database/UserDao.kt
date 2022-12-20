@@ -7,6 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface UserDao {
+    //본 어플의 유저들에 관한 DB
     @Query("SELECT * FROM user_table")
     fun getAll(): List<User>
 
