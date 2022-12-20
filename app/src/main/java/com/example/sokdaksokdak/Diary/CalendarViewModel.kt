@@ -10,11 +10,13 @@ class CalendarViewModel(application: Application): AndroidViewModel(application)
 
     private var writeDiary = WriteDiary(application)
 
+    //MVVM Pattern - Viewmodel에서 함수 조작
+    //데이터 불러오는 함수 연결
     public fun showDateContent(date: String): String{
         return writeDiary.getDateDiaryContent(date)
     }
 
-    public fun showDateKeyWord(date:String): String{
+    fun showDateKeyWord(date:String): String{
         return writeDiary.getDateKeyword(date)
     }
 

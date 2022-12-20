@@ -19,6 +19,7 @@ import com.example.sokdaksokdak.databinding.FragmentDiaryBinding
 import java.time.LocalDate
 
 class DiaryFragment : Fragment() {
+    //MVVM Pattern - View와 ViewModel의 Binding
     private lateinit var binding: FragmentDiaryBinding
     private lateinit var writeDiaryViewModel: WriteDiaryViewModel
     private lateinit var calendarViewModel: CalendarViewModel
@@ -141,6 +142,7 @@ class DiaryFragment : Fragment() {
             }
 
         }
+        //캘린더를 클릭시 ClickListener로 하여금 CalendarDialog 불러올것
         binding.btnforCal.setOnClickListener{
             val datePickerFragment = CalendarFragment()
             val supportFragment = requireActivity().supportFragmentManager
@@ -150,6 +152,7 @@ class DiaryFragment : Fragment() {
             ){
                     resultKey, bundle->
                 if(resultKey == "KEY"){
+                    //불러오는것 성공시, 날짜를 원하는 형식에 맞게 가공한 후 UI에 binding
 
                     val selectedDate = bundle.getString("SELECTED_DATE")?.split("-")
                     Log.e("loggg", selectedDate.toString())
@@ -167,6 +170,7 @@ class DiaryFragment : Fragment() {
                     binding.monthTextView.text = month
                     binding.dayTextView.text = day
 
+                    //날짜별 일기 키워드와 내용 불러와서 binding
                     binding.diaryTextView.visibility = View.VISIBLE
                     binding.diaryEditText.visibility = View.GONE
                     binding.diaryTextView.setText(calendarViewModel.showDateContent(date))
@@ -176,6 +180,7 @@ class DiaryFragment : Fragment() {
                     binding.keywordTextView.setText(calendarViewModel.showDateKeyWord(date))
                 }
                 else{
+                    //에러 확인 로그
                     Log.e("log", "fail")
                 }
             }

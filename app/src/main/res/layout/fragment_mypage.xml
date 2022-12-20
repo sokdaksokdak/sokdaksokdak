@@ -50,8 +50,6 @@
                 android:textColor="@color/pola_day_gray"
                 android:text="성해은"/>
 
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -72,7 +70,6 @@
                 android:layout_margin="10dp"
                 android:textColor="@color/pola_day_gray"
                 android:text="키워드 추천"/>
-
 
             <Switch
                 android:id="@+id/keywordToggleBtn"
