@@ -30,7 +30,6 @@ class DiaryRepository(application: Application) {
         thread.start()
     }
 
-    // TODO: 반환이 제대로 안 되는 문제
     fun getTodayKeyword(): String {
         var todayKeyword: String = "Get Today Keyword"
 
@@ -70,13 +69,13 @@ class DiaryRepository(application: Application) {
         return isExists
     }
 
-    fun deleteData() {
+    /*fun deleteData() {
         val r = Runnable {
             diaryDao.deleteData()
         }
         val thread = Thread(r)
         thread.start()
-    }
+    }*/
 
     fun getDiaryContent(): String {
         var diaryContent: String = "Get Today Diary Content"
@@ -95,6 +94,75 @@ class DiaryRepository(application: Application) {
         }
 
         return diaryContent
+
+    }
+
+
+    //RoomDB로부터 날짜별 일기 키워드 가져오기
+    fun getDateKeyword(date:String): String {
+        var dateKeyword: String = "Get date Keyword"
+
+        val r = Runnable {
+            dateKeyword = diaryDao.getDateKeyword(date)
+            println("\ntodayKeyword from DB in Runnable: "+dateKeyword)
+        }
+
+        val thread = Thread(r)
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: Exception) {
+            println("thread join exception in getTodayKeyword")
+        }
+
+        return dateKeyword
+    }
+    //RoomDB로부터 날짜별 일기 존재하는지 여부 가져오기
+    fun isDateDataExists(date:String): Boolean {
+        var isExists: Boolean = false
+        println("isExists: " + isExists)
+
+        val r = Runnable {
+            isExists = diaryDao.isDateDataExist(date)
+            println("isExists: " + isExists)
+        }
+
+        val thread = Thread(r)
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: Exception) {
+            println("thread join exception in isDataExists")
+        }
+        println("isExist: " + isExists)
+        return isExists
+    }
+
+    /*fun deleteData() {
+        val r = Runnable {
+            diaryDao.deleteData()
+        }
+        val thread = Thread(r)
+        thread.start()
+    }*/
+    //RoomDB로부터 날짜별 일기 내용 가져오기
+    fun getDateDiaryContent(date:String): String {
+        var diaryDateContent: String = "Get Today Diary Content"
+
+        val r = Runnable {
+            diaryDateContent = diaryDao.getDateContent(date)
+            println("\ndiaryContent from DB in Runnable: "+diaryDateContent)
+        }
+
+        val thread = Thread(r)
+        thread.start()
+        try {
+            thread.join()
+        } catch (e: Exception) {
+            println("thread join exception in getDiaryContent")
+        }
+
+        return diaryDateContent
 
     }
 

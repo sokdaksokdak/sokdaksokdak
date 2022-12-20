@@ -2,7 +2,6 @@ package com.example.sokdaksokdak.Factory
 
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import com.example.sokdaksokdak.*
 
 class PolaThemeFactory() :ThemeFactory {

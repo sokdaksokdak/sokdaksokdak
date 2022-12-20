@@ -17,6 +17,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".ThemeChangeActivity"
             android:exported="false" />
@@ -42,8 +43,7 @@
         </activity>
         <activity
             android:name=".PolaNaviActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".PolaSplashActivity"
             android:exported="true">
@@ -53,7 +53,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>

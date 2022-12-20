@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="?attr/android:windowBackground"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".writeDiary.DiaryFragment">
 
@@ -18,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/pola_gray"
+            android:textColor="@color/pola_primary"
             android:textSize="20dp"
             android:text="속닥속닥"
             android:gravity="center"
@@ -28,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
         <LinearLayout
+            android:id="@+id/btnforCal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -36,66 +36,112 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3">
+                android:layout_weight="0.8">
             </Space>
-            <TextView
-                android:id="@+id/monthTextView"
+
+            <RelativeLayout
                 android:layout_weight="1.8"
                 android:layout_width="0dp"
                 android:layout_height="65dp"
-                android:textColor="@color/pola_white"
-                android:textSize="45dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="?attr/colorAccent"
-                android:text="11"/>
+                >
+                <ImageView
+                    android:id="@+id/monthImgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="?attr/one" />
 
-            <TextView
-                android:id="@+id/dayTextView"
+                <TextView
+                    android:id="@+id/monthTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignLeft="@+id/monthImgView"
+                    android:layout_alignTop="@+id/monthImgView"
+                    android:layout_alignRight="@+id/monthImgView"
+                    android:layout_alignBottom="@+id/monthImgView"
+                    android:gravity="center"
+                    android:textColor="?attr/colorPrimaryDark"
+                    android:text="11"
+                    android:textSize="45dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
                 android:layout_weight="1.8"
                 android:layout_width="0dp"
-                android:layout_height="65dp"
-                android:textColor="@color/pola_gray"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="?attr/colorPrimary"
-                android:textSize="45dp"
-                android:text="22"/>
+                android:layout_height="65dp">
 
-            <TextView
-                android:id="@+id/write_time"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="2"
-                android:text="오후 11:30"
-                android:textColor="@color/pola_gray"
-                android:textSize="13dp" />
+                <ImageView
+                    android:id="@+id/dayImgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="?attr/two" />
+
+                <TextView
+                    android:id="@+id/dayTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignLeft="@+id/dayImgView"
+                    android:layout_alignTop="@+id/dayImgView"
+                    android:layout_alignRight="@+id/dayImgView"
+                    android:layout_alignBottom="@+id/dayImgView"
+                    android:gravity="center"
+                    android:text="22"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="45dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/keywordEditView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:text="시험"
-            android:textColor="@color/pola_day_gray"
-            android:visibility="visible"/>
-        <TextView
-            android:id="@+id/keywordTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:text="시험"
-            android:textColor="@color/pola_day_gray"
-            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2.5">
+
+            <ImageView
+                android:id="@+id/keywordImgView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200px"
+                android:layout_marginRight="200px"
+                android:scaleType="fitXY"
+                android:src="?attr/tape" />
+
+            <EditText
+                android:id="@+id/keywordEditView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/keywordImgView"
+                android:layout_alignTop="@+id/keywordImgView"
+                android:layout_alignRight="@+id/keywordImgView"
+                android:layout_alignBottom="@+id/keywordImgView"
+                android:gravity="center"
+                android:background="@null"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:hint="키워드를 입력하세요."
+                android:textColor="@color/pola_day_gray"
+                android:visibility="visible"/>
+            <TextView
+                android:id="@+id/keywordTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/keywordImgView"
+                android:layout_alignTop="@+id/keywordImgView"
+                android:layout_alignRight="@+id/keywordImgView"
+                android:layout_alignBottom="@+id/keywordImgView"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/pola_day_gray"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/diaryEditText"
@@ -105,13 +151,14 @@
             android:gravity="center"
             android:layout_marginLeft="65dp"
             android:layout_marginRight="65dp"
+            android:background="@null"
             android:textColor="@color/pola_day_gray"
             android:fontFamily="@font/custom_font"
             android:textColorHint="@color/pola_navi"
             android:hint="일기를 작성하세요."
             android:visibility="visible"
 
-            android:layout_weight="11"/>
+            android:layout_weight="12"/>
 
         <TextView
             android:id="@+id/diaryTextView"
@@ -124,27 +171,28 @@
             android:textColor="@color/pola_day_gray"
             android:textColorHint="@color/pola_navi"
             android:textSize="9pt"
-            android:hint="일기를 작성하세요."
             android:visibility="gone"
 
-            android:layout_weight="11"/>
+            android:layout_weight="12"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
         android:orientation="horizontal"
         android:gravity="center"
         android:weightSum="10">
         <Button
             android:id="@+id/diaryDoneBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_round"
             android:text="완료"/>
     </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"/>
+            android:layout_weight="3.5"/>
 
 
     </LinearLayout>

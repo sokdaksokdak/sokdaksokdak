@@ -8,6 +8,9 @@ class WriteDiary(application: Application) {
 
     private lateinit var keyword: String
     private lateinit var content: String
+    private val date: Int by lazy{
+        20221218
+    }
     // 날짜는? - (select datetime('now', 'localtime')
 
     init {
@@ -15,9 +18,9 @@ class WriteDiary(application: Application) {
         this.content = "일기를 작성하세요."
     }
 
-    public fun createTodayDiary() {
+    /*public fun createTodayDiary() {
         insertDiary()
-    }
+    }*/
 
     public fun getKeyword(): String{
         var keywordDB = repository.getTodayKeyword() // DB 에서 날짜로 keyword 가져오기
@@ -38,12 +41,9 @@ class WriteDiary(application: Application) {
     }
     public fun insertDiary(){
         repository.insertData("키워드를 선택하세요.", "일기를 작성하세요.")
-        // DataBase 에 keyword 혹은 content update
-        //db.diaryDao().insertDiaryData(this.keyword, this.content)
-        //println("success insert")
     }
 
-    // TODO: 일기 작성 완료했을 때 update 하는 함수
+    // 일기 작성 완료했을 때 update 하는 함수
     public fun updateDiary(){
         repository.updateData(this.keyword, this.content)
         // DataBase 에 keyword 혹은 content update
@@ -54,12 +54,23 @@ class WriteDiary(application: Application) {
 
     }
 
-    fun deleteData() {
+    /*fun deleteData() {
         repository.deleteData()
-
-    }
+    }*/
 
     fun getDiaryContent(): String {
         return repository.getDiaryContent()
+    }
+
+    fun isDateDataExists(date:String):Boolean{
+        return repository.isDateDataExists(date)
+    }
+
+     fun getDateKeyword(date:String): String{
+        return repository.getDateKeyword(date)
+    }
+
+    fun getDateDiaryContent(date:String):String{
+        return repository.getDateDiaryContent(date)
     }
 }

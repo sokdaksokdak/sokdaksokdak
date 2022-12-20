@@ -3,14 +3,13 @@ package com.example.sokdaksokdak
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.sokdaksokdak.databinding.FragmentDiaryBinding
+import com.example.sokdaksokdak.Factory.DefaultPreferenceManager
 import com.example.sokdaksokdak.databinding.FragmentMypageBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -23,6 +22,7 @@ class MypageFragment : Fragment() {
     var auth : FirebaseAuth?= null
     var googleSignInClient : GoogleSignInClient?= null
     lateinit var prefs: SharedPreferences
+    private lateinit var pref: DefaultPreferenceManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +42,13 @@ class MypageFragment : Fragment() {
 
         }
 
+        // 현재 모드 화면에 출력
+        pref = DefaultPreferenceManager(requireContext())
+        when(pref.getThemeType()){
+            "pola_theme" ->binding.currentThemeTextView.text="폴라로이드 테마"
+            "clover_theme" ->binding.currentThemeTextView.text="네잎클로버 테마"
+        }
+
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 //google
@@ -55,7 +62,7 @@ class MypageFragment : Fragment() {
                 auth = FirebaseAuth.getInstance()
 
                 binding.mypageName.text = FirebaseAuth.getInstance().currentUser?.displayName
-                binding.mypageBirth.visibility = View.INVISIBLE
+//                binding.mypageBirth.visibility = View.INVISIBLE
                 // 로그아웃
                 binding.logoutBtn.setOnClickListener {
                     FirebaseAuth.getInstance().signOut()
@@ -86,9 +93,9 @@ class MypageFragment : Fragment() {
                         var birth = user.kakaoAccount?.birthday.toString()
                         //var birthyear = user.kakaoAccount?.birthyear.toString()
                         Log.d("이름","이름 : "+name)
-                        binding.mypageBirth.visibility = View.VISIBLE
+//                        binding.mypageBirth.visibility = View.VISIBLE
                         binding.mypageName.text = name
-                        binding.mypageBirth.text = birth
+//                        binding.mypageBirth.text = birth
                     }
                 }
                 // 로그아웃
@@ -120,18 +127,24 @@ class MypageFragment : Fragment() {
             val shared = requireActivity().getSharedPreferences("keyword", Context.MODE_PRIVATE)
             val key = shared.getBoolean("isKeyword",true)
 
-            if(key)
+            if(key){
+                Log.d("keyword","true")
                 binding.keywordToggleBtn.isChecked = true
-            else
+            }else if(!key){
+                Log.d("keyword","false")
                 binding.keywordToggleBtn.isChecked = false
+            }
+
 
             binding.keywordToggleBtn.setOnClickListener {
-                prefs = requireActivity().getSharedPreferences("keyword", Context.MODE_PRIVATE)
+                val prefs = requireActivity().getSharedPreferences("keyword", Context.MODE_PRIVATE)
                 val editor = prefs.edit()
-                if(binding.keywordToggleBtn.text == "ON"){
+                Log.i("toggleBtn", binding.keywordToggleBtn.isChecked.toString())
+
+                if(binding.keywordToggleBtn.isChecked){
                     editor.putBoolean("isKeyword",true);
                     editor.apply()
-                }else if(binding.keywordToggleBtn.text == "OFF"){
+                }else if(!binding.keywordToggleBtn.isChecked) {
                     editor.putBoolean("isKeyword", false);
                     editor.apply()
                 }
