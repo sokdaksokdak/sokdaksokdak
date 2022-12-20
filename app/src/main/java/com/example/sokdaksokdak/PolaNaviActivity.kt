@@ -31,8 +31,10 @@ class PolaNaviActivity : AppCompatActivity() {
 
         pref = DefaultPreferenceManager(this)
 
+        // shared preference에서 사용자가 설정한 테마 가져옴
         val theme = pref.getThemeType()
         currentTheme = getAppTheme(theme)
+        // setTheme == 액티비티의 테마 설정하는 내장 함수
         setTheme(currentTheme)
 
         binding = ActivityPolaNaviBinding.inflate(layoutInflater)
@@ -51,9 +53,9 @@ class PolaNaviActivity : AppCompatActivity() {
                     setFragment(TAG_DIARY,DiaryFragment())
                     binding.navigationView.visibility = View.VISIBLE
                 }else{
-                    binding.navigationView.visibility = View.GONE
+//                    binding.navigationView.visibility = View.GONE
                     Log.d("로그인 화면", "아직 구글 로그인 안함")
-                    setFragment(TAG_LOGIN, LoginFragment())
+//                    setFragment(TAG_LOGIN, LoginFragment())
                 }
             } else if (tokenInfo != null) {
                 Log.d("로그인 화면", "이미 카카오 로그인되어있음")
@@ -77,7 +79,8 @@ class PolaNaviActivity : AppCompatActivity() {
         }
 
 
-        // 네이게이션 바에 fragment 연결
+        // 네비게이션 바에 when 구문 통해 fragment 연결
+        // 하단의 네비게이션에서 다이어리 클릭시 다이어리 화면띄우고, 설정 클릭시 설정화면 띄움
         binding.navigationView.setOnItemSelectedListener { item->
             // 메뉴 선택시 해당 화면 setting
             when(item.itemId){
@@ -102,6 +105,7 @@ class PolaNaviActivity : AppCompatActivity() {
         val themeType = pref.getThemeType()
         val settingTheme = getAppTheme(themeType)
 
+        // 사용자가 설정한 테마와 시스템의 테마가 다르면 activity recreate
         if (currentTheme != settingTheme) {
             recreate()
         }
@@ -109,6 +113,7 @@ class PolaNaviActivity : AppCompatActivity() {
     }
 
 
+    // 현재 shared preference에 어떤 테마가 기억되는지 가져옴
     fun getAppTheme(theme: String?): Int {
         var newTheme: Int
         when (theme) {
